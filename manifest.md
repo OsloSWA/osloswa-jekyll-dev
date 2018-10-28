@@ -1,0 +1,23 @@
+# OSWA Manifest
+
+1. Arkitektur som bærebjelke for verdiskapning og lønnsomhet i virksomheten fremfor arkitektur som konsekvens av prosjekter og kode.
+
+2. Ansvarligjøring og sporbarhet i arkitekturvalg fremfor visjoner, arkitekturskisser og gode ideer.
+
+3. Arkitektur som proaktiv balanse mellom prosjekt og organisasjon fremfor arkitektur for regulering og standardisering.
+
+4. Arkitektur som realisering av forretningsstrategi fremfor arkitektur drevet av produkt og teknologivalg.
+
+5. Arkitekter som pådrivere for kunnskap og kultur fremfor teknologifokuserte guruer og beslutningstakere.
+
+# OSWA Norway Manifesto in English
+
+1. Architecture as a foundation for value and profit OVER architecture as a result of projects and software development.
+
+2. Responsibility and traceability in architecture decisions OVER architecture visions, architecture diagrams and great ideas.
+
+3. Architecture as pro-active balance between project(s) and organization OVER architecture to regulate and standardize.
+
+4. Architecture as an enabler of business strategy OVER architecture driven from product and technology.
+
+5. Architects as promoters of knowledge and learning culture OVER technology focused gurus and decision makers.
