@@ -1,0 +1,22 @@
+{
+  "name": "osloswa.github.com",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "http-server -o"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OsloSWA/osloswa.github.com.git"
+  },
+  "author": "Dervis M",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OsloSWA/osloswa.github.com/issues"
+  },
+  "homepage": "https://github.com/OsloSWA/osloswa.github.com#readme",
+  "devDependencies": {
+    "http-server": "0.11.1"
+  }
+}
