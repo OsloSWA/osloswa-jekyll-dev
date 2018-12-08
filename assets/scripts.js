@@ -12,6 +12,12 @@ function templateEvents(data) {
   moment.locale('no');
 
   const eventArray = [];
+  data.forEach(event => {
+    const name = event.name;
+    const time = moment(new Date(event.time)).format("dddd, MMMM DD, HH:mm");
+    
+    eventArray.push({name, time});
+  });
 
   const jsrender = window.jsrender;
   const template = jsrender.templates("#meetupTemplate");
@@ -19,13 +25,6 @@ function templateEvents(data) {
 
   const meetupNode = document.getElementById("#replaceMeetupList");
   meetupNode.html(htmlOutput);
-
-  data.forEach(event => {
-    const name = event.name;
-    const time = moment(new Date(event.time)).format("dddd, MMMM DD, HH:mm");
-
-    eventArray.push({name, time});
-  });
 }
 
 function getOSWAEvents() {
