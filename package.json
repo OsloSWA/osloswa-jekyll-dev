@@ -1,8 +1,7 @@
 {
   "name": "osloswa.github.com",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Homepage of Oslo Software Architecture.",
   "scripts": {
     "test": "http-server -o"
   },
@@ -15,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/OsloSWA/osloswa.github.com/issues"
   },
-  "homepage": "https://github.com/OsloSWA/osloswa.github.com#readme",
+  "homepage": "https://github.com/OsloSWA/osloswa.github.com",
   "devDependencies": {
     "http-server": "0.11.1"
   }

@@ -71,6 +71,10 @@ input, select, textarea {
 	appearance: none;
 }
 
+.red {
+    color: #db6172;
+}
+
 /* Basic */
 
 	@-ms-viewport {

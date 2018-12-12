@@ -70,6 +70,29 @@
 				</div>
 			</section>
 
+        <!-- One -->
+        <section id="meetups" class="wrapper style1">
+            <div class="inner">
+                <div class="content">
+                    <h2>Planlagte meetups</h2>
+                    <script id="meetupTemplate" type="text/x-jsrender">
+                      {{for events}}
+                        <section>
+                            <h3><a class="icon fa-calendar red" href="#"> {{:time}} - {{:name}}</a></h3>
+                            <p>{{:description}}</p>
+                            <ul class="actions">
+                                <li><a href="#" class="button primary small">Join</a></li>
+                            </ul>
+                        </section>
+                      {{/for}}
+                    </script>
+                    <div id="replaceMeetupList">
+                        <p>Ingen meetups planlagt.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 		<!-- Two -->
 			<section id="two" class="wrapper style2">
 				<div class="inner">
