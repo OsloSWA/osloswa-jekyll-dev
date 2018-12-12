@@ -34,7 +34,7 @@ function getOSWAEvents() {
 }
 
 function getEvents(url) {
-  return fetch(url, {mode: "no-cors", cache: "no-cache"})
+  return fetch(url, {cache: "no-cache"})
   .then(data => {
     return data.json();
   }).catch(function(ex) {
@@ -43,7 +43,8 @@ function getEvents(url) {
 }
 
 function getFields() {
-  return "?&photo-host=public&page=20&fields=featured_photo,short_link,past_event_count_inclusive"; // plain_text_no_images_description
+  const key = "";
+  return "?&photo-host=public&page=20&fields=featured_photo,short_link,past_event_count_inclusive"; // plain_text_no_images_description // &sign=true&key=
 }
 
 function load() {
