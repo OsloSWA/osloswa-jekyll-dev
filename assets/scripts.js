@@ -29,12 +29,12 @@ function templateEvents(data) {
 }
 
 function getOSWAEvents() {
-  const url = "http://api.meetup.com/Oslo-Software-Architecture/events" + getFields();
+  const url = "https://api.meetup.com/Oslo-Software-Architecture/events" + getFields() + getSigns();
   return getEvents(url);
 }
 
 function getEvents(url) {
-  return fetch(url, {cache: "no-cache"})
+  return fetch(url, { cache: "no-cache" })
   .then(data => {
     return data.json();
   }).catch(function(ex) {
@@ -44,7 +44,11 @@ function getEvents(url) {
 
 function getFields() {
   const key = "";
-  return "?&photo-host=public&page=20&fields=featured_photo,short_link,past_event_count_inclusive"; // plain_text_no_images_description // &sign=true&key=
+  return "?&photo-host=public&page=20&fields=featured_photo%2Cshort_link%2Cpast_event_count_inclusive"; // plain_text_no_images_description // &sign=true&key=
+}
+
+function getSigns() {
+    return "&sig_id=266610235&sig=8e776c0aca3b5d5673eb53f68bf9ec38d67af91f"
 }
 
 function load() {
