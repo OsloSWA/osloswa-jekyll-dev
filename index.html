@@ -9,30 +9,9 @@
   <p> <a href="manifest.html">Manifest</a> </p>
 
   <p> <a href="latitude">OSWA 1: Latitude</a> </p>
-  <p> <a href="prototype">OSWA 2: Prototype</a> </p>
+  <p> <a href="prototype">OSWA 2: Prototype</a><a target="_blank" href="https://osloswa.github.io/prototype/">(live)</a> </p>
 
   <p> <a href="https://github.com/OsloSWA">OSWA GitHub</a> </p>
-
-  <script type="text/x-jsrender" id="template">
-    {{props #data}}
-      <article class="meetup">
-      <h2>{{>key}}</h2>
-      {{if prop}}
-          <ul>
-          {{for prop}}
-              <li>
-                  <h3><a href="{{:event_url}}">{{:name}}</a></h3>
-                  <p>{{:time}}</p>
-              </li>
-          {{/for}}
-          </ul>
-      {{else}}
-          <p>Ingen fremtidige meetups er planlagt enda.</p>
-      {{/if}}
-      </article>
-      <br>
-  {{/props}}
-  </script>
 
   </body>
 </html>
