@@ -74,21 +74,36 @@
         <section id="meetups" class="wrapper style1">
             <div class="inner">
                 <div class="content">
-                    <h2>Planlagte meetups</h2>
-                    <script id="meetupTemplate" type="text/x-jsrender">
+					<h2>Planlagte meetups</h2>
+					<script id="upcomingTemplate" type="text/x-jsrender">
                       {{for events}}
                         <section>
-                            <h3><a class="icon fa-calendar red" href="#"> {{:time}} - {{:name}}</a></h3>
+                            <h3><a class="icon fa-calendar red" target="_blank" href="{{:shortlink}}"> {{:time}} - {{:name}}</a></h3>
                             <p>{{:description}}</p>
                             <ul class="actions">
-                                <li><a href="#" class="button primary small">Join</a></li>
+                                <li><a target="_blank" href="{{:shortlink}}" class="button primary small">Join</a></li>
                             </ul>
                         </section>
                       {{/for}}
                     </script>
-                    <div id="replaceMeetupList">
-                        <p>Ingen meetups planlagt.</p>
-                    </div>
+					<div id="upcomingMeetupList">
+						<p>Ingen meetups planlagt.</p>
+					</div>
+					<h2>Tidligere meetups</h2>
+					<script id="pastTemplate" type="text/x-jsrender">
+                      {{for events}}
+                        <div class="row">
+                        	<div class="col-12">
+								<ul class="alt">
+									<li><a class="icon fa-calendar red" target="_blank" href="{{:shortlink}}"> {{:time}} - {{:name}}</a></li>
+								</ul>
+							</div>
+                        </div>
+                      {{/for}}
+                    </script>
+					<div id="pastMeetupList">
+						<p>Ingen tidligere meetups.</p>
+					</div>
                 </div>
             </div>
         </section>
