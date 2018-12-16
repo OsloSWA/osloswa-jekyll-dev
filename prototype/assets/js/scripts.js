@@ -132,6 +132,9 @@ function sendToSlack2(url, text) {
     return new Promise((resolve, reject) => {
         fetch(url, {
             method: 'post',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
             data: 'payload=' + JSON.stringify({
                 "text": text
             })
