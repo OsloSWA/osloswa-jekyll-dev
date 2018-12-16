@@ -1,5 +1,12 @@
 moment.locale('nb');
 
+function loadMeetups() {
+    getOSWAEvents()
+        .then(events => {
+            parseEvents(events);
+        });
+}
+
 function parseEvents(data) {
   if (data && Array.isArray(data)) {
     return templateEvents(data);
@@ -14,9 +21,10 @@ function templateEvents(data) {
 
   const eventArray = [];
   data.forEach(event => {
+    const format = event.status === 'upcoming' ? 'LLLL' : 'LL'
     const name = event.name;
     const description = event.description;
-    const time = moment(new Date(event.time)).format('LLLL'); // UTC start time of the event, in milliseconds since the epoch
+    const time = moment(new Date(event.time)).format(format); // UTC start time of the event, in milliseconds since the epoch
     const shortlink = event.short_link;
     const venue = event.venue;
     const yes_rsvp_count = event.yes_rsvp_count;
@@ -28,8 +36,9 @@ function templateEvents(data) {
         description,
         status,
         time: time.charAt(0).toUpperCase() + time.slice(1),
-        shortlink, venue, yes_rsvp_count, waitlist_count, web_actions
+        shortlink, venue, yes_rsvp_count, waitlist_count, web_actions,
     });
+    console.log(event);
   });
 
   const past = eventArray.filter(event => event.status === 'past');
@@ -37,6 +46,10 @@ function templateEvents(data) {
 
   render("#pastTemplate", "pastMeetupList", past.reverse());
   render("#upcomingTemplate", "upcomingMeetupList", upcoming);
+}
+
+function loadPhotoAlbums(id) {
+
 }
 
 function render(templateName, element, data) {
@@ -72,24 +85,49 @@ function getFields() {
       "featured_photo",
       "short_link", // A shortened link for the event on meetup.com
       "rsvp_limit", // The number of "yes" RSVPS an event has capacity for
-      "past_event_count_inclusive", // Number of past events that happened before and including this event
       "how_to_find_us",
       "event_hosts", // .name, .intro, .photo.photo_link, .join_date,  .photo.thumb_link, .photo.highres_link
       "featured" // Boolean indicator of whether or not a given event is featured
   ];
 
   const allFields = fields.reduce((p, n) => p + "," + n);
+  //console.log(allFields);
   return "?&photo-host=public&&scroll=future_or_past&page=10&fields="+allFields;
 }
 
-function getSigns() {
-    return "&sig_id=35117512&sig=a23d1f0c980d04eb0be9cf101d7160e733e0b97d"
+function recap(response) {
+    $.ajax({
+        type: "POST",
+        url: 'https://www.google.com/recaptcha/api/siteverify',
+        data: JSON.stringify({
+            secret: '',
+            response: response,
+
+        }),
+        success: success,
+        dataType: dataType
+    });
 }
 
-function loadMeetups() {
-    getOSWAEvents().then(events => {
-        parseEvents(events);
-    });
+function sendToSlack(url, text) {
+    return new Promise(resolve => {
+        $.ajax({
+            data: 'payload=' + JSON.stringify({
+                "text": text
+            }),
+            dataType: 'json',
+            processData: false,
+            type: 'POST',
+            url: url,
+            success: function () {
+                resolve();
+            }
+        });
+    })
+}
+
+function getSigns() {
+    return "&sig_id=35117512&sig=5ef2fde9a65427cfc2753065e49ca2ce5dcc4f88"
 }
 
 loadMeetups();
