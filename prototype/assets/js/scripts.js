@@ -104,7 +104,9 @@ function recap(response) {
             response: response,
 
         }),
-        success: success,
+        success: function (result) {
+
+        },
         dataType: dataType
     });
 }
@@ -119,10 +121,27 @@ function sendToSlack(url, text) {
             processData: false,
             type: 'POST',
             url: url,
-            success: function () {
+            success: function (result) {
                 resolve();
             }
         });
+    })
+}
+
+function sendToSlack2(url, text) {
+    return new Promise((resolve, reject) => {
+        fetch(url, {
+            method: 'post',
+            data: 'payload=' + JSON.stringify({
+                "text": text
+            })
+        })
+        .then(function (result) {
+            resolve(result);
+        })
+        .catch(function (err) {
+            reject(err);
+        })
     })
 }
 
