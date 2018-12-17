@@ -2,6 +2,36 @@ moment.locale('nb');
 let current = 0;
 let pastEvents = undefined;
 
+const html = {
+    gid: el => document.getElementById(el),
+
+    el: el => document.createElement(el),
+
+    // add class names
+    cn: (el, cn) => el.classList.add(cn),
+
+    // element add, return child
+    ela: (el, ch) => {
+        el.appendChild(ch);
+        return ch;
+    },
+
+    // element add, return parent
+    elap: (el, ch) => {
+        el.appendChild(ch);
+        return el;
+    },
+
+    // create element, add class names
+    elp: (e, p) => {
+        const element = html.el(e);
+        if (p && p.indexOf(' ') > -1) p.split(' ').forEach(c => html.cn(element, c));
+        else if (p && Array.isArray(p)) p.forEach(c => html.cn(element, c));
+        else if (p && p.indexOf(' ') === -1) html.cn(element, p);
+        return element;
+    }
+};
+
 function loadMeetups() {
     return getOSWAEvents()
         .then(events => {
@@ -63,7 +93,7 @@ document.querySelector( "#showMoreBtn").addEventListener('click', () => {
     showMore()
 });
 
-function showMore(past) {
+function showMore() {
     current += 3;
     let end = current;
 
@@ -76,56 +106,36 @@ function showMore(past) {
     render("#pastTemplate", "pastMeetupList", events);
 }
 
-const gid = el => document.getElementById(el);
-const el = el => document.createElement(el);
-const cn = (el, cn) => el.classList.add(cn);
-const ela = (el, ch) => {
-    el.appendChild(ch);
-    return ch;
-};
-const elap = (el, ch) => {
-    el.appendChild(ch);
-    return el;
-};
-const elp = (e, p) => {
-    const element = el(e);
-    if (p && p.indexOf(' ') > -1) p.split(' ').forEach(c => cn(element, c));
-    else if (p && Array.isArray(p)) p.forEach(c => cn(element, c));
-    else if (p && p.indexOf(' ') === -1) cn(element, p);
-    return element;
-};
-
-function loadPhotoAlbums(id) {
-    const grid = ela(
-        elp('div', 'box alt'),
-        elp('div', 'row gtr-uniform')
+function loadPhotoAlbums() {
+    const grid = html.ela(
+        html.elp('div', 'box alt'),
+        html.elp('div', 'row gtr-uniform')
     );
 
     const imageUrls = [];
 
     pastEvents.forEach(event => {
-        imageUrls.push(event);
-    });
-
-    shuffleArray(imageUrls).forEach(event => {
-        imageUrls.push(event);
-
         if (event.photo_album && event.photo_album.photo_sample) {
             event.photo_album.photo_sample.forEach(sample => {
-                let gridCell = elp('div', 'col-3');
-                const img = ela(
-                    ela(gridCell, elp('span', 'image fit')),
-                    el('img')
-                );
-                img.setAttribute('src', sample.photo_link);
-                img.setAttribute('alt', 'event photo');
-                ela(grid, gridCell);
-            });
+                sample.title = event.photo_album.title;
+                imageUrls.push(sample);
+            })
         }
     });
 
-    const container = gid('communityPhotosGrid');
-    ela(container, grid);
+    shuffleArray(imageUrls).forEach(sample => {
+        let gridCell = html.elp('div', 'col-3');
+        const img = html.ela(
+            html.ela(gridCell, html.elp('span', 'image fit')),
+            html.el('img')
+        );
+        img.setAttribute('src', sample.photo_link);
+        img.setAttribute('alt', sample.title);
+        html.ela(grid, gridCell);
+    });
+
+    const container = html.gid('communityPhotosGrid');
+    html.ela(container, grid);
 }
 
 function shuffleArray(arr) {
