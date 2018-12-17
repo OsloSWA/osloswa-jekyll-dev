@@ -3,15 +3,22 @@ let current = 0;
 let pastEvents = undefined;
 
 function loadMeetups() {
-    getOSWAEvents()
+    return getOSWAEvents()
         .then(events => {
-            parseEvents(events);
+            return parseEvents(events);
         });
 }
 
 function parseEvents(data) {
   if (data && Array.isArray(data)) {
-    return templateEvents(data);
+    return new Promise((resolve, reject) => {
+        try {
+            templateEvents(data);
+            resolve();
+        } catch (e) {
+            reject(e);
+        }
+    });
   } else {
     console.error("JSON data has invalid format.", data);
     throw new Error("JSON data must be an array.");
@@ -33,13 +40,16 @@ function templateEvents(data) {
     const waitlist_count = event.waitlist_count;
     const web_actions = event.web_actions;
     const status = event.status;
+    const photo_album = event.photo_album;
     eventArray.push({
+        id: event.id,
         name,
         description,
         status,
         time: time.charAt(0).toUpperCase() + time.slice(1),
-        shortlink, venue, yes_rsvp_count, waitlist_count, web_actions,
+        shortlink, venue, yes_rsvp_count, waitlist_count, web_actions,photo_album
     });
+    console.log(event);
   });
 
   pastEvents = eventArray.filter(event => event.status === 'past').reverse();
@@ -91,7 +101,31 @@ function loadPhotoAlbums(id) {
         elp('div', 'row gtr-uniform')
     );
 
-    for (let i = 0; i < 3; i++) {
+    const imageUrls = [];
+
+    pastEvents.forEach(event => {
+        imageUrls.push({
+            id: event.id,
+            photo_album: event.photo_album
+        });
+
+        if (event.photo_album && event.photo_album.photo_sample) {
+            event.photo_album.photo_sample.forEach(sample => {
+                let gridCell = elp('div', 'col-4');
+                const img = ela(
+                    ela(gridCell, elp('span', 'image fit')),
+                    el('img')
+                );
+                img.setAttribute('src', sample.photo_link);
+                img.setAttribute('alt', 'event photo');
+                ela(grid, gridCell);
+            });
+        }
+
+    });
+
+
+    /*for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             let gridCell = elp('div', 'col-4');
             const img = ela(
@@ -102,14 +136,13 @@ function loadPhotoAlbums(id) {
             img.setAttribute('alt', 'event photo');
             ela(grid, gridCell);
         }
-    }
+    }*/
 
     const container = gid('communityPhotosGrid');
     ela(container, grid);
 }
 
-function loadPhotoAlbums2() {
-
+function loadPhotoAlbumCircles() {
     let imageCircles = elp('div', 'image-circles');
 
     for (let i = 0; i < 3; i++) {
@@ -168,7 +201,8 @@ function getFields() {
       "rsvp_limit", // The number of "yes" RSVPS an event has capacity for
       "how_to_find_us",
       "event_hosts", // .name, .intro, .photo.photo_link, .join_date,  .photo.thumb_link, .photo.highres_link
-      "featured" // Boolean indicator of whether or not a given event is featured
+      "featured", // Boolean indicator of whether or not a given event is featured,
+      "photo_album"
   ];
 
   const allFields = fields.reduce((p, n) => p + "," + n);
@@ -230,8 +264,9 @@ function sendToSlack2(url, text) {
 }
 
 function getSigns() {
-    return "&sig_id=35117512&sig=5ef2fde9a65427cfc2753065e49ca2ce5dcc4f88"
+    return "&sig_id=35117512&sig=d42fecb23546e55dc7f0b799b2191371812462c5"
 }
 
-loadMeetups();
-loadPhotoAlbums();
+loadMeetups().then(result => {
+    loadPhotoAlbums();
+});
