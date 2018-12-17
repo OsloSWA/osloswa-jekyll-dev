@@ -108,14 +108,14 @@
     </div>
 </section>
 
-<!-- One -->
 <section id="meetups" class="wrapper style1 special">
     <div class="inner">
         <div class="content">
-            <section>
+            <header>
                 <h2>Planlagte meetups</h2>
+            </header>
 
-                <script id="upcomingTemplate" type="text/x-jsrender">
+            <script id="upcomingTemplate" type="text/x-jsrender">
                 <div></div>
                    <div class="row">
 						<div class="col-12">
@@ -132,37 +132,77 @@
                             </section>
                           {{/for}}
 						</div>
-                </script>
+            </script>
 
-                <footer id="upcomingMeetupList">
-                    <p>Ingen meetups er planlagt enda. Hva med å <a target="_blank" href="https://goo.gl/forms/OJpL46F0qJMNvgIO2">foreslå en?</a> </p>
-                </footer>
+            <footer id="upcomingMeetupList">
+                <p>Ingen meetups er planlagt enda. <br/> Hva med å <a target="_blank" href="https://goo.gl/forms/OJpL46F0qJMNvgIO2">foreslå en?</a> </p>
+            </footer>
+
+        </div>
+    </div>
+</section>
+
+<!-- One -->
+<section id="tidligeremeetups" class="wrapper style2">
+    <div class="inner">
+        <div class="content">
+            <section class="special">
+                <header>
+                    <h2>Tidligere meetups</h2>
+                </header>
             </section>
 
-            <h2>Tidligere meetups</h2>
-            <script id="pastTemplate" type="text/x-jsrender">
+            <section>
+                <script id="pastTemplate" type="text/x-jsrender">
+                    <div></div>
 					<div class="row">
-						<div class="col-2-large"></div>
+					    <div class="col-2">&nbsp;</div>
 						<div class="col-12-medium col-8">
 								<ul class="alt">
 										{{for events}}
 										<li>
-											<section>
-												<h3>{{:time}}</h3>
-												<a class="icon red" target="_blank" href="{{:shortlink}}">{{:name}}</a>
-											</section>
-											<br />
+										    <div class="row">
+										        <div class="col-2 col-4-medium">
+                                                    <span class="icon fa-calendar"> {{:time}}</span>
+                                                </div>
+                                                <div class="col-10 col-8-medium">
+										            <section>
+                                                        <a class="icon red" target="_blank" href="{{:shortlink}}">{{:name}}</a>
+                                                    </section>
+                                                </div>
+                                            </div>
 										</li>
 										{{/for}}
 								</ul>
 						</div>
+						<div class="col-2">&nbsp;</div>
 					</div>
+                </script>
 
+                <footer id="pastMeetupList">
+                    <p>Ingen tidligere meetups.</p>
+                </footer>
+            </section>
 
-            </script>
-            <div id="pastMeetupList">
-                <p>Ingen tidligere meetups.</p>
+            <ul class="actions special">
+                <li><span id="showMoreBtn" class="button small">Vis flere</span></li>
+            </ul>
+
+        </div>
+    </div>
+</section>
+
+<section id="oswacommunity" class="wrapper style1 special">
+    <div class="inner">
+        <div class="content">
+            <header>
+                <h2>OSWA Community</h2>
+            </header>
+
+            <div id="communityPhotosGrid">
+
             </div>
+
         </div>
     </div>
 </section>

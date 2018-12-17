@@ -1,4 +1,6 @@
 moment.locale('nb');
+let current = 0;
+let pastEvents = undefined;
 
 function loadMeetups() {
     getOSWAEvents()
@@ -21,7 +23,7 @@ function templateEvents(data) {
 
   const eventArray = [];
   data.forEach(event => {
-    const format = event.status === 'upcoming' ? 'LLLL' : 'LL'
+    const format = event.status === 'upcoming' ? 'LLLL' : 'L';
     const name = event.name;
     const description = event.description;
     const time = moment(new Date(event.time)).format(format); // UTC start time of the event, in milliseconds since the epoch
@@ -38,18 +40,97 @@ function templateEvents(data) {
         time: time.charAt(0).toUpperCase() + time.slice(1),
         shortlink, venue, yes_rsvp_count, waitlist_count, web_actions,
     });
-    console.log(event);
   });
 
-  const past = eventArray.filter(event => event.status === 'past');
+  pastEvents = eventArray.filter(event => event.status === 'past').reverse();
   const upcoming = eventArray.filter(event => event.status === 'upcoming');
 
-  render("#pastTemplate", "pastMeetupList", past.reverse());
+  showMore();
   render("#upcomingTemplate", "upcomingMeetupList", upcoming);
 }
 
-function loadPhotoAlbums(id) {
+document.querySelector( "#showMoreBtn").addEventListener('click', () => {
+    showMore()
+});
 
+function showMore(past) {
+    current += 3;
+    let end = current;
+
+    if (current >= pastEvents.length) {
+        end = pastEvents.length;
+        document.querySelector( "#showMoreBtn").classList.add("disabled");
+    }
+
+    const events = pastEvents.slice(0, end);
+    render("#pastTemplate", "pastMeetupList", events);
+}
+
+const gid = el => document.getElementById(el);
+const el = el => document.createElement(el);
+const cn = (el, cn) => el.classList.add(cn);
+const ela = (el, ch) => {
+    el.appendChild(ch);
+    return ch;
+};
+const elap = (el, ch) => {
+    el.appendChild(ch);
+    return el;
+};
+const elp = (e, p) => {
+    const element = el(e);
+    if (p && p.indexOf(' ') > -1) p.split(' ').forEach(c => cn(element, c));
+    else if (p && Array.isArray(p)) p.forEach(c => cn(element, c));
+    else if (p && p.indexOf(' ') === -1) cn(element, p);
+    return element;
+};
+
+function loadPhotoAlbums(id) {
+    const grid = ela(
+        elp('div', 'box alt'),
+        elp('div', 'row gtr-uniform')
+    );
+
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            let gridCell = elp('div', 'col-4');
+            const img = ela(
+                ela(gridCell, elp('span', 'image fit')),
+                el('img')
+            );
+            img.setAttribute('src', 'images/oswa-logo-s.jpeg');
+            img.setAttribute('alt', 'event photo');
+            ela(grid, gridCell);
+        }
+    }
+
+    const container = gid('communityPhotosGrid');
+    ela(container, grid);
+}
+
+function loadPhotoAlbums2() {
+
+    let imageCircles = elp('div', 'image-circles');
+
+    for (let i = 0; i < 3; i++) {
+        const imageContainer = ela(
+            imageCircles,
+            elp('div', 'images')
+        );
+
+        for (let j = 0; j < 3; j++) {
+
+            let gridCell = elp('span', 'image');
+            const img = el('img');
+            img.setAttribute('src', 'images/oswa-logo-s.jpeg');
+            img.setAttribute('alt', 'event photo');
+
+            ela(imageContainer, elap(gridCell, img));
+        }
+    }
+
+    const container = gid('communityPhotosGrid');
+    ela(container, imageCircles);
 }
 
 function render(templateName, element, data) {
@@ -153,3 +234,4 @@ function getSigns() {
 }
 
 loadMeetups();
+loadPhotoAlbums();
