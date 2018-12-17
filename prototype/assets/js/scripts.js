@@ -104,14 +104,15 @@ function loadPhotoAlbums(id) {
     const imageUrls = [];
 
     pastEvents.forEach(event => {
-        imageUrls.push({
-            id: event.id,
-            photo_album: event.photo_album
-        });
+        imageUrls.push(event);
+    });
+
+    shuffleArray(imageUrls).forEach(event => {
+        imageUrls.push(event);
 
         if (event.photo_album && event.photo_album.photo_sample) {
             event.photo_album.photo_sample.forEach(sample => {
-                let gridCell = elp('div', 'col-4');
+                let gridCell = elp('div', 'col-3');
                 const img = ela(
                     ela(gridCell, elp('span', 'image fit')),
                     el('img')
@@ -121,25 +122,23 @@ function loadPhotoAlbums(id) {
                 ela(grid, gridCell);
             });
         }
-
     });
-
-
-    /*for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            let gridCell = elp('div', 'col-4');
-            const img = ela(
-                ela(gridCell, elp('span', 'image fit')),
-                el('img')
-            );
-            img.setAttribute('src', 'images/oswa-logo-s.jpeg');
-            img.setAttribute('alt', 'event photo');
-            ela(grid, gridCell);
-        }
-    }*/
 
     const container = gid('communityPhotosGrid');
     ela(container, grid);
+}
+
+function shuffleArray(arr) {
+    const array = arr.slice();
+
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
+    return array;
 }
 
 function loadPhotoAlbumCircles() {
@@ -207,7 +206,7 @@ function getFields() {
 
   const allFields = fields.reduce((p, n) => p + "," + n);
   //console.log(allFields);
-  return "?&photo-host=public&&scroll=future_or_past&page=10&fields="+allFields;
+  return "?&photo-host=public&&scroll=future_or_past&page=20&fields="+allFields;
 }
 
 function recap(response) {
@@ -264,7 +263,7 @@ function sendToSlack2(url, text) {
 }
 
 function getSigns() {
-    return "&sig_id=35117512&sig=d42fecb23546e55dc7f0b799b2191371812462c5"
+    return "&sig_id=35117512&sig=9ed5bc0ed689f88e22fee868a4fa215fddd4a35f" // 10 = d42fecb23546e55dc7f0b799b2191371812462c5 // 20 = 9ed5bc0ed689f88e22fee868a4fa215fddd4a35f
 }
 
 loadMeetups().then(result => {
