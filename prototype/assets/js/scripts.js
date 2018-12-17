@@ -152,27 +152,26 @@ function shuffleArray(arr) {
 }
 
 function loadPhotoAlbumCircles() {
-    let imageCircles = elp('div', 'image-circles');
+    let imageCircles = html.elp('div', 'image-circles');
 
     for (let i = 0; i < 3; i++) {
-        const imageContainer = ela(
+        const imageContainer = html.ela(
             imageCircles,
-            elp('div', 'images')
+            html.elp('div', 'images')
         );
 
         for (let j = 0; j < 3; j++) {
-
-            let gridCell = elp('span', 'image');
-            const img = el('img');
+            let gridCell = html.elp('span', 'image');
+            const img = html.el('img');
             img.setAttribute('src', 'images/oswa-logo-s.jpeg');
             img.setAttribute('alt', 'event photo');
 
-            ela(imageContainer, elap(gridCell, img));
+            html.ela(imageContainer, html.elap(gridCell, img));
         }
     }
 
-    const container = gid('communityPhotosGrid');
-    ela(container, imageCircles);
+    const container = html.gid('communityPhotosGrid');
+    html.ela(container, imageCircles);
 }
 
 function render(templateName, element, data) {
