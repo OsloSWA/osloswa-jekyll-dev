@@ -16,3 +16,4 @@ gem 'jekyll-feed'
 gem 'jekyll-sitemap'
 gem 'jekyll-gist'
 gem 'jekyll-paginate'
+gem 'jekyll-compose' # https://github.com/jekyll/jekyll-compose
