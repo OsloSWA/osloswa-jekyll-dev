@@ -1,0 +1,60 @@
+# main text of home
+name: Oslo Software Architecture
+bio: Det største arkitekturmiljøet i Norge
+description: The homepage of OSWA.
+
+url: https://github.com/OsloSWA # is overridden in _dev.yml and oswa_no.yml
+timezone: Europe/Oslo
+
+permalink: /:title/
+markdown: kramdown
+highlighter: rouge
+
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+
+title: Oslo Software Architecture
+email: styret@oswa.no
+
+# Social Media accounts
+# facebook: myfacebook
+twitter: OsloSWA
+#instagram: OsloSWA
+# pinterest: OsloSWA
+# linkedin: OsloSWA
+# youtube: OsloSWA
+# spotify: OsloSWA
+github: OsloSWA
+# lanyrd: OsloSWA
+# stackoverflow: 00000/OsloSWA
+# medium: OsloSWA
+# vimeo: OsloSWA
+
+plugins_dir: ./_plugins
+plugins:
+  - jemoji
+  - jekyll-mentions
+  - jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-paginate
+
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+exclude:
+  - package.json
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+
+sass:
+  sass_dir: _sass
+  style: :compressed

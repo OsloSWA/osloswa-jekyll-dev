@@ -1,0 +1,19 @@
+#matrix-wrapper {
+    position: relative;
+}
+
+#matrix-overlay_disabled {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,1));
+}
+
+#communityPhotosGrid > * {
+    z-index: 100;
+}
+
+#communityPhotosGrid img {
+    background: url(../../images/loading.gif) 50% no-repeat;
+}
