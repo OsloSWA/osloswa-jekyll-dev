@@ -235,19 +235,53 @@ function loadPhotoAlbums() {
         }
     });
 
-    shuffleArray(imageUrls).forEach(sample => {
+    const imageMap = [];
+    let randomImages = shuffleArray(imageUrls);
+    randomImages.forEach(sample => {
         let gridCell = html.elementClass('div', 'col-3');
         const img = html.elementChildAdd(
             html.elementChildAdd(gridCell, html.elementClass('span', 'image fit')),
             html.element('img')
         );
-        img.setAttribute('src', sample.photo_link);
+        img.setAttribute('src', 'images/clear.png');
         img.setAttribute('alt', sample.title);
         html.elementChildAdd(grid, gridCell);
+        imageMap.push({el: img, sample, gridCell, grid});
     });
 
     const container = html.getId('communityPhotosGrid');
     html.elementChildAdd(container, grid);
+
+    asyncImageLoad(imageMap);
+}
+
+/**
+ * Asynchronous image preloading, that also removes images
+ * that were taken in portrait orientation. The latter causes
+ * the photo matrix to look horizontally uneven. This filtering
+ * is the first step in order to deal with that issue.
+ *
+ * @param imageMap
+ */
+function asyncImageLoad(imageMap) {
+    imageMap.forEach(image => {
+        const preLoadImg = new Image();
+        preLoadImg.onload = function () {
+            let orientation;
+            if (preLoadImg.naturalWidth > preLoadImg.naturalHeight) {
+                orientation = 'landscape';
+                image.el.src = this.src;
+            } else if (preLoadImg.naturalWidth < preLoadImg.naturalHeight) {
+                orientation = 'portrait';
+                image.grid.removeChild(image.gridCell);
+            } else {
+                orientation = 'even';
+                image.el.src = this.src;
+            }
+        };
+
+        preLoadImg.src = image.sample.photo_link;
+    })
 }
 
 /**
