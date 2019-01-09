@@ -99,7 +99,11 @@ function getFields() {
 
     const allFields = fields.reduce((p, n) => p + "," + n);
     //console.log(allFields);
-    return "?&photo-host=public&&scroll=future_or_past&page=20&fields="+allFields;
+    return "?desc=true&photo-host=public&&status=upcoming,past&page=20&fields="+allFields;
+}
+
+function getSigns() {
+    return "&sig_id=35117512&sig=ef77ebdb2a0806655f8e7f8d0883bebfa905c838" // 10 = d42fecb23546e55dc7f0b799b2191371812462c5 // 20 = 9ed5bc0ed689f88e22fee868a4fa215fddd4a35f
 }
 
 /**
@@ -185,7 +189,7 @@ function templateEvents(data) {
     console.log(event);
   });
 
-  pastEvents = eventArray.filter(event => event.status === 'past').reverse();
+  pastEvents = eventArray.filter(event => event.status === 'past');
   const upcoming = eventArray.filter(event => event.status === 'upcoming');
 
   showMore();
@@ -243,7 +247,7 @@ function loadPhotoAlbums() {
             html.elementChildAdd(gridCell, html.elementClass('span', 'image fit')),
             html.element('img')
         );
-        img.setAttribute('src', 'images/clear.png');
+        img.setAttribute('src', 'assets/images/clear.png');
         img.setAttribute('alt', sample.title);
         html.elementChildAdd(grid, gridCell);
         imageMap.push({el: img, sample, gridCell, grid});
@@ -312,7 +316,7 @@ function loadPhotoAlbumCircles() {
         for (let j = 0; j < 3; j++) {
             let gridCell = html.elementClass('span', 'image');
             const img = html.element('img');
-            img.setAttribute('src', 'images/oswa-logo-s.jpeg');
+            img.setAttribute('src', 'assets/images/oswa-logo-s.jpeg');
             img.setAttribute('alt', 'event photo');
 
             html.elementChildAdd(imageContainer, html.elementParentAdd(gridCell, img));
@@ -382,10 +386,6 @@ function sendToSlack2(url, text) {
             reject(err);
         })
     })
-}
-
-function getSigns() {
-    return "&sig_id=35117512&sig=9ed5bc0ed689f88e22fee868a4fa215fddd4a35f" // 10 = d42fecb23546e55dc7f0b799b2191371812462c5 // 20 = 9ed5bc0ed689f88e22fee868a4fa215fddd4a35f
 }
 
 loadMeetups().then(() => {
