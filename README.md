@@ -1,5 +1,5 @@
-# osloswa.github.com
+# osloswa jekyll dev
 
 OSWA website repo.
 
-Goto http://osloswa.github.io
+Goto http://osloswa.github.io/osloswa-jekyll-dev
