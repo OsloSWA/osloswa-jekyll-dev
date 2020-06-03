@@ -2,4 +2,4 @@
 
 OSWA website repo.
 
-Goto http://osloswa.github.io/osloswa-jekyll-dev
+Goto http://oswa.no/osloswa-jekyll-dev/
